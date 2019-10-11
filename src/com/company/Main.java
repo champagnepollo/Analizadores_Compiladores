@@ -6,7 +6,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        AFD analizador = new AFD("archivo.txt");
-        //analizador.imprimir();
+        AnalizadorLexico analizador = new AnalizadorLexico("archivo.txt");
+        analizador.imprimir();
+
     }
 }
