@@ -1,2 +1,10 @@
-Esta es la prueba de que 
-esto sirve realmente bien.
+public static void (int x,r);
+if(r>6){
+r=7.6;
+}
+y;
+x+43+y=54;
+int r+43;
+double43;
+double45;
+j =44x+gy+ty;

@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 
 public class TablaSimbolos {
-    private ArrayList<ElementoTablaSimbolos> tablaSimbolos;
+    public ArrayList<ElementoTablaSimbolos> tablaSimbolos;
 
     public TablaSimbolos() {
         this.tablaSimbolos = new ArrayList<>();
@@ -57,5 +57,46 @@ public class TablaSimbolos {
         tablaSimbolos.add(new ElementoTablaSimbolos("void","void",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("volatile","volatile",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("while","while",null));
+
+        tablaSimbolos.add(new ElementoTablaSimbolos("+","opa",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("-","opa",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("*","opa",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("/","opa",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("%","opa",null));
+
+        tablaSimbolos.add(new ElementoTablaSimbolos(">","opr",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos(">=","opr",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("<","opr",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("<=","opr",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("==","opr",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("!=","opr",null));
+
+        tablaSimbolos.add(new ElementoTablaSimbolos("&","opb",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("&&","opb",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("|","opb",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("||","opb",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("!","opb",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("^","opb",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("=","opas",null));
+
+        tablaSimbolos.add(new ElementoTablaSimbolos("+=","opas",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("-=","opas",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("*=","opas",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("/=","opas",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("%=","opas",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("&=","opas",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("|=","opas",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("^=","opas",null));
+
+
+
+
+
+
+
+    }
+
+    public void agregarElemento(ElementoTablaSimbolos elemento){
+        tablaSimbolos.add(elemento);
     }
 }
