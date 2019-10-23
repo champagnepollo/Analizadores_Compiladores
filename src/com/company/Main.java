@@ -43,7 +43,6 @@ public class Main extends JFrame implements ActionListener, Serializable {
         inputTableScroll = new JScrollPane(inputTable);
         inputTableScroll.setBounds(520,10,500,280);
         add(inputTableScroll);
-
         inputTM.addColumn("ER");
         inputTM.addColumn("Componente Lexico");
         inputTM.addColumn("Valor");
@@ -112,7 +111,7 @@ public class Main extends JFrame implements ActionListener, Serializable {
             TablaSimbolos tabla = new TablaSimbolos();
             //System.out.println(analizador.content.length());
             //System.out.println(analizador.buffer.length);
-            tablap = analizador.Analizar(tabla);
+            tablap = analizador.Analizar2(tabla);
             tablar=tabla;
             arrayr =new String[tablar.tablaSimbolos.size()][3];
             arrayp =new String[tablap.size()][3];
@@ -146,6 +145,7 @@ public class Main extends JFrame implements ActionListener, Serializable {
                 simbolTM.addRow(s);
             }
             errorText.setText(errores);
+            //System.out.println(errores);
         }
     }
 }

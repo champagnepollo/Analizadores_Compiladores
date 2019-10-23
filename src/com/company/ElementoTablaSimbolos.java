@@ -16,11 +16,6 @@ public class ElementoTablaSimbolos {
         if (obj == this)
             return true;
 
-        //if(((ElementoTablaSimbolos) obj).ComponenteLexico.equals("int") ||
-                //((ElementoTablaSimbolos) obj).ComponenteLexico.equals("double") ){
-            //System.out.println(((ElementoTablaSimbolos) obj).ComponenteLexico+ " sd");
-            //return false;
-        //}
         if(this.ComponenteLexico.equals("int") ||
         this.ComponenteLexico.equals("double") ){
             if(this.ER.equals("int") ||

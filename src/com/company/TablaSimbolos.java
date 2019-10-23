@@ -57,20 +57,17 @@ public class TablaSimbolos {
         tablaSimbolos.add(new ElementoTablaSimbolos("void","void",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("volatile","volatile",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("while","while",null));
-
         tablaSimbolos.add(new ElementoTablaSimbolos("+","opa",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("-","opa",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("*","opa",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("/","opa",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("%","opa",null));
-
         tablaSimbolos.add(new ElementoTablaSimbolos(">","opr",null));
         tablaSimbolos.add(new ElementoTablaSimbolos(">=","opr",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("<","opr",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("<=","opr",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("==","opr",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("!=","opr",null));
-
         tablaSimbolos.add(new ElementoTablaSimbolos("&","opb",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("&&","opb",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("|","opb",null));
@@ -78,7 +75,6 @@ public class TablaSimbolos {
         tablaSimbolos.add(new ElementoTablaSimbolos("!","opb",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("^","opb",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("=","opas",null));
-
         tablaSimbolos.add(new ElementoTablaSimbolos("+=","opas",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("-=","opas",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("*=","opas",null));
@@ -87,13 +83,14 @@ public class TablaSimbolos {
         tablaSimbolos.add(new ElementoTablaSimbolos("&=","opas",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("|=","opas",null));
         tablaSimbolos.add(new ElementoTablaSimbolos("^=","opas",null));
-
-
-
-
-
-
-
+        tablaSimbolos.add(new ElementoTablaSimbolos("{","corcheteabre",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("}","corchetecierra",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("(","parentesisabre",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos(")","parentesiscierra",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos(",","coma",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos(";","puntoycoma",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("[","llaveabre",null));
+        tablaSimbolos.add(new ElementoTablaSimbolos("]","llavecierra",null));
     }
 
     public void agregarElemento(ElementoTablaSimbolos elemento){
