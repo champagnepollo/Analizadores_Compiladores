@@ -97,14 +97,14 @@ public class AFD {
             }
             else if (cadena[cont] == '{') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"corcheteabre",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"llaveabre",null));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if (cadena[cont] == '}') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"corchetecierra",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"llavecierra",null));
                 palabraActual="";
                 cont++;
                 q0();
@@ -141,14 +141,14 @@ public class AFD {
 
             else if (cadena[cont] == '[') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"llaveabre",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"corcheteabre",null));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if (cadena[cont] == ']') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"llavecierra",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"corchetecierra",null));
                 palabraActual="";
                 cont++;
                 q0();

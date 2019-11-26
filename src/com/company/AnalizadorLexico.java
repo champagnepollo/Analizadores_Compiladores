@@ -22,7 +22,7 @@ public class AnalizadorLexico {
         System.out.println(texto);
     }
 
-    public ArrayList<ElementoTablaSimbolos> Analizar2(TablaSimbolos tablaSimbolos){
+    public ArrayList<ElementoTablaSimbolos> Analizar(TablaSimbolos tablaSimbolos){
         ArrayList<ElementoTablaSimbolos> tablaSimbolosEncontrados= new ArrayList<>();
             String palabra = content;
                 AFD automata = new AFD(palabra+'@');
@@ -36,7 +36,6 @@ public class AnalizadorLexico {
         erroress+=automata.errores;
         return tablaSimbolosEncontrados;
     }
-
 
     public void imprimir() {
         System.out.println(content);

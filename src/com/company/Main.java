@@ -111,7 +111,7 @@ public class Main extends JFrame implements ActionListener, Serializable {
             TablaSimbolos tabla = new TablaSimbolos();
             //System.out.println(analizador.content.length());
             //System.out.println(analizador.buffer.length);
-            tablap = analizador.Analizar2(tabla);
+            tablap = analizador.Analizar(tabla);
             tablar=tabla;
             arrayr =new String[tablar.tablaSimbolos.size()][3];
             arrayp =new String[tablap.size()][3];
