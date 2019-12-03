@@ -45,7 +45,6 @@ public class Main extends JFrame implements ActionListener, Serializable {
         add(inputTableScroll);
         inputTM.addColumn("ER");
         inputTM.addColumn("Componente Lexico");
-        inputTM.addColumn("Valor");
 
         //Simbols table
         simbolTM = new DefaultTableModel();
@@ -56,7 +55,6 @@ public class Main extends JFrame implements ActionListener, Serializable {
 
         simbolTM.addColumn("ER");
         simbolTM.addColumn("Componente lexico");
-        simbolTM.addColumn("Valor");
 
         //Errors
         //errorText = new JTextField();
@@ -120,12 +118,12 @@ public class Main extends JFrame implements ActionListener, Serializable {
             for(int i=0;i<tablar.tablaSimbolos.size();i++){
                 arrayr[i][0]=tablar.tablaSimbolos.get(i).ER;
                 arrayr[i][1]=tablar.tablaSimbolos.get(i).ComponenteLexico;
-                if(tablar.tablaSimbolos.get(i).Valor==null){
-                    arrayr[i][2]="-";
-                }
-                else{
-                    arrayr[i][2]=tablar.tablaSimbolos.get(i).Valor;
-                }
+//                if(tablar.tablaSimbolos.get(i).Valor==null){
+//                    arrayr[i][2]="-";
+//                }
+//                else{
+//                    arrayr[i][2]=tablar.tablaSimbolos.get(i).Valor;
+//                }
             }
             for(String[] s: arrayr){
                 inputTM.addRow(s);
@@ -134,12 +132,12 @@ public class Main extends JFrame implements ActionListener, Serializable {
             for(int i=0;i<tablap.size();i++){
                 arrayp[i][0]=tablap.get(i).ER;
                 arrayp[i][1]=tablap.get(i).ComponenteLexico;
-                if(tablap.get(i).Valor==null){
-                    arrayp[i][2]="-";
-                }
-                else{
-                    arrayp[i][2]=tablap.get(i).Valor;
-                }
+//                if(tablap.get(i).Valor==null){
+//                    arrayp[i][2]="-";
+//                }
+//                else{
+//                    arrayp[i][2]=tablap.get(i).Valor;
+//                }
             }
             for(String[] s: arrayp){
                 simbolTM.addRow(s);

@@ -66,7 +66,7 @@ public class AnalizadorSintactico {
         int entryIndex = -1;
 
         for( int i = 0; i < TablaSimbolos.tablaSimbolos.size(); i++){
-            if( TablaSimbolos.tablaSimbolos.get(i).ER.equals("Main")){
+            if( TablaSimbolos.tablaSimbolos.get(i).ER.equals("main")){
                 entryIndex = i;
             }
         }
@@ -78,49 +78,57 @@ public class AnalizadorSintactico {
     private void Sentencia(ArrayList<ElementoTablaSimbolos> tokens) {
         if(tokens.get(0).ComponenteLexico == "tipo" || tokens.get(0).ComponenteLexico == "id"){
 
-
             if(!this.Declaracion(tokens)){
                 this.Asignacion(tokens);
             }
 
-        }else if(tokens.get(0).ComponenteLexico == "if" ){
-            this.Condicion(tokens);
+//        }else if(tokens.get(0).ComponenteLexico == "if" ){
+//            this.Condicion(tokens);
         }/*else{
             this.loop(tokens);
         }*/
-
     }
-
+//
     private boolean Declaracion(ArrayList<ElementoTablaSimbolos> tokens) {
-        if( tokens.get(0).ComponenteLexico == "tipo"){
+        int cont = 0;
+            //declaracion de primer tipo:: <mod><tipo><id>;
+        //id::<id> | <id>,<id>
 
-            if( tokens.get(1).ComponenteLexico == "id"){
+        while(tokens.get(cont).ComponenteLexico == "modif"){
+            cont++;
+        }
 
-                if( tokens.get(2).ComponenteLexico == "puntoycoma"){
+        if( tokens.get(cont).ComponenteLexico == "tipo"){
+            cont++;
 
-                    Expresion tmp = new Expresion();
+            if( tokens.get(cont).ComponenteLexico == "id"){
+                cont++;
+
+                //Caso para multiples variables declaradas en una sola linea
+//                while(tokens.get(cont).ComponenteLexico == "coma" && tokens.get(cont+1).ComponenteLexico == "id"){
+//                    cont+=2;
+//                }
+
+                if( tokens.get(cont).ComponenteLexico == "puntoycoma"){
+
+                    Sentencia tmp = new Sentencia();
                     tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
                     tmp.tipo = "decl";
-                    Expresiones.add(tmp);
-
+                    Sentencias.add(tmp);
                     System.out.println("decl");
 
                     return true;
                 }
             }
-
             // Si no fue una declaracion de primer tipo, se intentara segundo tipo
             // decl:: <type> <assign>
 
-
-            Expresion tmp = new Expresion();
+            Sentencia tmp = new Sentencia();
             tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
             tmp.tipo = "decl";
 
-            Expresiones.add(tmp);
-            this.Asignacion( new ArrayList<ElementoTablaSimbolos>(tokens.subList(1, tokens.size())) );
-
-
+            Sentencias.add(tmp);
+            this.Asignacion(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont-1, tokens.size())));
         }
         return false;
     }
@@ -129,34 +137,33 @@ public class AnalizadorSintactico {
 
         //Valida el tamano minimo
         if( tokens.size() < 4 ){
-            Errors.add("Assignment incomplete");
+//            Errors.add("Assignment incomplete");
             return false;
         }
 
-        if( tokens.get(0).ComponenteLexico == "id"){
-            if( tokens.get(1).ComponenteLexico == "opas"){
+        if(tokens.get(0).ComponenteLexico == "id"){
+            if( tokens.get(1).ER == "="){
                 if(tokens.get(2).ComponenteLexico == "int" || tokens.get(2).ComponenteLexico == "double"){
                     if( tokens.get(3).ComponenteLexico == "puntoycoma"){
-                        Expresion tmp = new Expresion();
+                        Sentencia tmp = new Sentencia();
                         tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
                         tmp.tipo = "assign";
-                        Expresiones.add(tmp);
+                        Sentencias.add(tmp);
                         System.out.println("assign");
-
                         return true;
                     }else{
-                        Errors.add("Missing semicolon");
+//                        Errors.add("Missing semicolon");
                     }
                 }
 
-                if( oper(new ArrayList<ElementoTablaSimbolos>( tokens.subList( 2, tokens.size() - 1 ) )) ){
+                if(oper(new ArrayList<ElementoTablaSimbolos>( tokens.subList( 2, tokens.size() - 1 ) ))){
                     if( tokens.get(tokens.size() - 1).ComponenteLexico == "puntoycoma" ){
                         System.out.println("assign");
                         return true;
                     }
                 }
             }else{
-                Errors.add("Expecting equal lexema");
+//                Errors.add("Expecting equal ER");
             }
         }
         return false;
@@ -168,13 +175,13 @@ public class AnalizadorSintactico {
             if( this.var(tokens.get(0))  ){
                 return true;
             }
-            Errors.add("Oper missing tokens");
+//            Errors.add("Oper missing tokens");
             return false;
         }
 
-        if( this.var(tokens.get(0)) ){
-            if( this.op( tokens.get(1) ) ){
-                if( this.var( tokens.get(2) ) ) {
+        if(this.var(tokens.get(0))){
+            if(this.op( tokens.get(1))){
+                if(this.var( tokens.get(2))) {
                     return true;
                 }
             }
@@ -182,34 +189,63 @@ public class AnalizadorSintactico {
         return false;
     }
 
-    private void cond(ArrayList<ElementoTablaSimbolos> tokens) {
-        if( tokens.get(0).ComponenteLexico == "if"){
-            if( tokens.get(1).ComponenteLexico == "parentesisabre"){
-                ArrayList<ElementoTablaSimbolos> tmp = new ArrayList<>();
-                tmp.add( tokens.get(2) );
-                tmp.add( tokens.get(3) );
-                tmp.add( tokens.get(4) );
-                if(oper_l(tmp) ){
-                    tmp.clear();
-                    if( tokens.get(5).ComponenteLexico == "parentesiscierra"){
-                        if(tokens.get(6).ComponenteLexico == "llaveabre"){
-                            for( int i = 7; i < tokens.size(); i++ ){
-                                tmp.add(tokens.get(i));
-                            }
-                            System.out.println("cond");
-                            Sentencia(tmp);
-                            tmp.clear();
-                        }
-                    }
-                }else{
-                    Errors.add("Expecting Logical Operation");
-                }
-            }
+    private boolean op(ElementoTablaSimbolos t){
+        /*if(op_log(t)){
+            return true;
+
+        }else*/ if(oper_a(t)){
+            return true;
+        }else{
+//            Errors.add("Not OP found");
+            return false;
         }
+
     }
 
-    private boolean var( ElementoTablaSimbolos t ){
-        if(t.ComponenteLexico == "id" || t.ComponenteLexico == "int" || t.ComponenteLexico == "boolean"  || t.ComponenteLexico == "char"){
+//    private boolean op_log( ElementoTablaSimbolos t ){
+////        if( t.ER.equals("&&") || t.ER.equals("||") ){
+//        if(t.ComponenteLexico.equals("opb")){
+//            return true;
+//        }
+//        return false;
+//    }
+
+    private boolean oper_a( ElementoTablaSimbolos t) {
+//        if(t.ER.equals("+") || t.ER.equals("-") || t.ER.equals("*") || t.ER.equals("/") || t.ER.equals("%")){
+        if(t.ComponenteLexico.equals("opa")){
+            return true;
+        }
+        return false;
+    }
+//
+//    private void cond(ArrayList<ElementoTablaSimbolos> tokens) {
+//        if( tokens.get(0).ComponenteLexico == "if"){
+//            if( tokens.get(1).ComponenteLexico == "parentesisabre"){
+//                ArrayList<ElementoTablaSimbolos> tmp = new ArrayList<>();
+//                tmp.add( tokens.get(2) );
+//                tmp.add( tokens.get(3) );
+//                tmp.add( tokens.get(4) );
+//                if(oper_l(tmp) ){
+//                    tmp.clear();
+//                    if( tokens.get(5).ComponenteLexico == "parentesiscierra"){
+//                        if(tokens.get(6).ComponenteLexico == "llaveabre"){
+//                            for( int i = 7; i < tokens.size(); i++ ){
+//                                tmp.add(tokens.get(i));
+//                            }
+//                            System.out.println("cond");
+//                            Sentencia(tmp);
+//                            tmp.clear();
+//                        }
+//                    }
+//                }else{
+////                    Errors.add("Expecting Logical Operation");
+//                }
+//            }
+//        }
+//    }
+
+    private boolean var(ElementoTablaSimbolos t){
+        if(t.ComponenteLexico == "id" || t.ComponenteLexico == "int" || t.ComponenteLexico == "double"){
             return true;
         }
         return false;

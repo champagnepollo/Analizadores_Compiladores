@@ -3,12 +3,10 @@ package com.company;
 public class ElementoTablaSimbolos {
     public String ER;
     public String ComponenteLexico;
-    public String Valor;
 
-    public ElementoTablaSimbolos(String ER, String ComponenteLexico, String Valor) {
+    public ElementoTablaSimbolos(String ER, String ComponenteLexico) {
         this.ER = ER;
         this.ComponenteLexico = ComponenteLexico;
-        this.Valor = Valor;
     }
     public boolean equals(Object obj) {
         if (!(obj instanceof ElementoTablaSimbolos))

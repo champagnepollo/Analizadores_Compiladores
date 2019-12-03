@@ -10,7 +10,7 @@ public class AFD {
     public int cont;
     public int conte;
     public boolean aceptado=true;
-    public TablaSimbolos tablaSimbolos ;
+    public TablaSimbolos tablaSimbolos;
     public ArrayList<ElementoTablaSimbolos> palabras;
     public String errores="";
     String palabraActual="";
@@ -97,28 +97,28 @@ public class AFD {
             }
             else if (cadena[cont] == '{') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"llaveabre",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"llaveabre"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if (cadena[cont] == '}') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"llavecierra",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"llavecierra"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if (cadena[cont] == '(') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"parentesisabre",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"parentesisabre"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if (cadena[cont] == ')') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"parentesiscierra",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"parentesiscierra"));
                 palabraActual="";
                 cont++;
                 q0();
@@ -126,14 +126,14 @@ public class AFD {
 
             else if (cadena[cont] == ',') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"coma",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"coma"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if (cadena[cont] == ';') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"puntoycoma",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"puntoycoma"));
                 palabraActual="";
                 cont++;
                 q0();
@@ -141,14 +141,14 @@ public class AFD {
 
             else if (cadena[cont] == '[') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"corcheteabre",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"corcheteabre"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if (cadena[cont] == ']') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"corchetecierra",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"corchetecierra"));
                 palabraActual="";
                 cont++;
                 q0();
@@ -185,16 +185,16 @@ public class AFD {
                 cont++;
                 q1();
             } else {
-                if(tablaSimbolos.tablaSimbolos.contains(new ElementoTablaSimbolos(palabraActual,"",null))){
-                    palabras.add(new ElementoTablaSimbolos(palabraActual,palabraActual,null));
+                if(tablaSimbolos.tablaSimbolos.contains(new ElementoTablaSimbolos(palabraActual,""))){
+                    palabras.add(new ElementoTablaSimbolos(palabraActual,palabraActual));
                 }
                 else{
-                    palabras.add(new ElementoTablaSimbolos(palabraActual,"id",null));
+                    palabras.add(new ElementoTablaSimbolos(palabraActual,"id"));
                 }
                 palabraActual="";
                 q0();
 
-                //palabras.add(new ElementoTablaSimbolos(palabraActual,"id",null));
+                //palabras.add(new ElementoTablaSimbolos(palabraActual,"id"));
                 //palabraActual="";
                 //q0();
 
@@ -226,7 +226,7 @@ public class AFD {
                 q1n2();
             }
             else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"int",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"int"));
                 palabraActual="";
                 q0();
 
@@ -280,7 +280,7 @@ public class AFD {
                 q0();
             }
             else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"double",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"double"));
                 palabraActual="";
                 q0();
             }
@@ -316,13 +316,13 @@ public class AFD {
         if(cont<cadena.length) {
             if (cadena[cont] == '=') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opa",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opa"));
                 palabraActual="";
                 q0();
             }
@@ -333,12 +333,12 @@ public class AFD {
         if(cont<cadena.length) {
             if (cadena[cont] == '=' ||cadena[cont] == '>') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr"));
                 palabraActual="";
                 cont++;
                 q0();
             } else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr"));
                 palabraActual="";
                 q0();
             }
@@ -348,12 +348,12 @@ public class AFD {
         if(cont<cadena.length) {
             if (cadena[cont] == '=') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr"));
                 palabraActual="";
                 cont++;
                 q0();
             } else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr"));
                 palabraActual="";
                 q0();
             }
@@ -363,12 +363,12 @@ public class AFD {
         if(cont<cadena.length) {
             if (cadena[cont] == '=') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr"));
                 palabraActual="";
                 cont++;
                 q0();
             } else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas"));
                 palabraActual="";
                 q0();
             }
@@ -378,12 +378,12 @@ public class AFD {
         if(cont<cadena.length) {
             if (cadena[cont] == '=') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opr"));
                 palabraActual="";
                 cont++;
                 q0();
             } else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb"));
                 palabraActual="";
                 q0();
             }
@@ -393,19 +393,19 @@ public class AFD {
         if(cont<cadena.length) {
             if (cadena[cont] == '&') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if(cadena[cont] == '='){
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas"));
                 palabraActual="";
                 cont++;
                 q0();
             }else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb"));
                 palabraActual="";
                 q0();
             }
@@ -415,20 +415,20 @@ public class AFD {
         if(cont<cadena.length) {
             if (cadena[cont] == '|') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else if(cadena[cont] == '='){
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb"));
                 palabraActual="";
                 q0();
             }
@@ -438,13 +438,13 @@ public class AFD {
         if(cont<cadena.length) {
             if (cadena[cont] == '=') {
                 palabraActual+=cadena[cont];
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opas"));
                 palabraActual="";
                 cont++;
                 q0();
             }
             else {
-                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb",null));
+                palabras.add(new ElementoTablaSimbolos(palabraActual,"opb"));
                 palabraActual="";
                 q0();
             }

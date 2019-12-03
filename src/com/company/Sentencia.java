@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class Expresion {
+public class Sentencia {
     public ArrayList<ElementoTablaSimbolos> token;
     public String tipo;
 }
