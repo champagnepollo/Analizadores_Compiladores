@@ -66,7 +66,7 @@ public class AnalizadorSintactico {
         int entryIndex = -1;
 
         for( int i = 0; i < Main.tablap.size(); i++){
-            if(Main.tablap.get(i).ER.equals("class")){
+            if(Main.tablap.get(i).ComponenteLexico == "class"){
                 entryIndex = i;
             }
         }
@@ -75,39 +75,80 @@ public class AnalizadorSintactico {
 
     //sentencias
     private void Sentencia(ArrayList<ElementoTablaSimbolos> tokens) {
-        if(tokens.get(0).ComponenteLexico == "tipo" && !(tokens.get(0).ER.equals("if")))
+        if(tokens.get(0).ComponenteLexico == "tipo" && !(tokens.get(0).ComponenteLexico == "if"))
             this.Declaracion(tokens);
         else if (tokens.get(0).ComponenteLexico == "id")
             this.Asignacion(tokens);
 
         int cont = 0;
-        if(tokens.get(cont).ER.equals("if") || tokens.get(cont).ER.equals("else")){
-            if(tokens.get(++cont).ComponenteLexico == "parentesisabre"){
+        if(tokens.get(cont).ComponenteLexico == "if" || tokens.get(cont).ComponenteLexico == "else"){
+            this.ifcond(tokens);
+//            if(tokens.get(++cont).ComponenteLexico == "parentesisabre"){
+//                ArrayList<ElementoTablaSimbolos> tmp = new ArrayList<ElementoTablaSimbolos>();
+//                cont++;
+//                if(!oper_l(new ArrayList<ElementoTablaSimbolos>(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont, cont+3))))) {
+//                    if(tokens.get(cont).ComponenteLexico == "true" || tokens.get(cont).ComponenteLexico == "false")
+//                        cont+=2;
+//                    else
+//                        errores += "Error en operacion relacional\n";
+//                }else
+//                    cont+=4;
+//
+//                Sentencia temp = new Sentencia();
+//                temp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
+//                temp.tipo = "ifcond";
+//                Sentencias.add(temp);
+//                System.out.println("ifcond");
+//                bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont+1, tokens.size()-1)));
+////                while(!(tokens.get(++cont).ComponenteLexico == "parentesiscierra")){
+//////                TODO: oper_l
+////                    tmp.add(tokens.get(cont++));
+////                }
+//            }
+
+        }else if (tokens.get(tokens.size()-1).ComponenteLexico != "puntoycoma") {
+            errores += "Hace falta ; en la sentencia\n";
+        }
+    }
+
+    private boolean ifcond(ArrayList<ElementoTablaSimbolos> tokens){
+        int cont = 0;
+        if(tokens.get(cont).ComponenteLexico == "if") {
+            if (tokens.get(++cont).ComponenteLexico == "parentesisabre") {
                 ArrayList<ElementoTablaSimbolos> tmp = new ArrayList<ElementoTablaSimbolos>();
                 cont++;
-                if(!oper_l(new ArrayList<ElementoTablaSimbolos>(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont, cont+3))))) {
-                    if(tokens.get(cont).ER.equals("true") || tokens.get(cont).ER.equals("false"))
-                        cont+=2;
+                if (!oper_l(new ArrayList<ElementoTablaSimbolos>(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont, cont + 3))))) {
+                    if (tokens.get(cont).ComponenteLexico == "true" || tokens.get(cont).ComponenteLexico == "false")
+                        cont += 2;
                     else
                         errores += "Error en operacion relacional\n";
-                }else
-                    cont+=4;
+                } else
+                    cont += 4;
 
                 Sentencia temp = new Sentencia();
                 temp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
                 temp.tipo = "ifcond";
                 Sentencias.add(temp);
                 System.out.println("ifcond");
-                bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont+1, tokens.size()-1)));
+                bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont + 1, tokens.size() - 1)));
+                return true;
 //                while(!(tokens.get(++cont).ComponenteLexico == "parentesiscierra")){
 ////                TODO: oper_l
 //                    tmp.add(tokens.get(cont++));
 //                }
             }
-
-        }else if (tokens.get(tokens.size()-1).ComponenteLexico != "puntoycoma") {
-            errores += "Hace falta ; en la sentencia\n";
         }
+        else if(tokens.get(cont++).ComponenteLexico == "else") {
+            Sentencia temp = new Sentencia();
+            temp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
+            temp.tipo = "ifcond";
+            Sentencias.add(temp);
+            System.out.println("ifcond");
+            bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont + 1, tokens.size() - 1)));
+            return true;
+        }
+        errores += "If definido incorrectamente";
+        return false;
     }
 
     private boolean Declaracion(ArrayList<ElementoTablaSimbolos> tokens) {
@@ -235,6 +276,11 @@ public class AnalizadorSintactico {
             //TODO: operaciones con multiples operadores
             if(this.op( tokens.get(1))){
                 if(this.var( tokens.get(2))) {
+                    Sentencia tmp = new Sentencia();
+                    tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
+                    tmp.tipo = "oper";
+                    Sentencias.add(tmp);
+                    System.out.println("oper");
                     return true;
                 }
             }
