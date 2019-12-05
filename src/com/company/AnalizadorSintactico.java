@@ -3,32 +3,32 @@ package com.company;
 import java.util.ArrayList;
 
 public class AnalizadorSintactico {
+    public String errores = "Errores sintacticos encontrados\n";
+
     public void Analizar(){
-        int mainIndex = EntryAt();
-
-        if( mainIndex == -1 ){
-            System.out.println("No Rick function found!");
-            System.exit(-1);
-        }
-
-        if( !CheckEntry( mainIndex ) ){
-            System.out.println("Rick function error in definition!");
-            System.out.println("Excepcting: <TYPE> Rick(){}");
-            System.exit(-1);
-        }
-
-        if( CountBrackets() != 0 ){
-            System.out.println("Missing Brackets!");
-            System.exit(-1);
-        }
-
-        int p = EntryBracketAt( mainIndex );
-        //TODO: Analizar(int, int)
-//        Analizar(p, TablaSimbolos.tablaSimbolos.size());
+//        int mainIndex = EntryAt();
+//
+//        if( mainIndex == -1 ){
+//            System.out.println("No existe funcion main");
+//        }
+//
+//        if( !CheckEntry( mainIndex ) ){
+//            System.out.println("Rick function error in definition!");
+//            System.out.println("Excepcting: <TYPE> Rick(){}");
+//        }
+//
+//        if( CountBrackets() != 0 ){
+//            System.out.println("Missing Brackets!");
+//        }
+//
+//        int p = EntryBracketAt( mainIndex );
+//        //TODO: Analizar(int, int)
+//        Analizar(p, Main.tablap.size());
+        Analizar(-1, Main.tablap.size());
     }
     private int EntryBracketAt( int mainIndex ){
-        for(int i = mainIndex; i < TablaSimbolos.tablaSimbolos.size(); i++){
-            if( TablaSimbolos.tablaSimbolos.get(i).ComponenteLexico== "llaveabre"){
+        for(int i = mainIndex; i < Main.tablap.size(); i++){
+            if( Main.tablap.get(i).ComponenteLexico== "llaveabre"){
                 return i;
             }
         }
@@ -38,13 +38,13 @@ public class AnalizadorSintactico {
     private boolean CheckEntry(int mainIndex) {
         boolean entry = true;
 
-        if(TablaSimbolos.tablaSimbolos.get(mainIndex - 1).ComponenteLexico != "tipo"){
+        if(Main.tablap.get(mainIndex - 1).ComponenteLexico != "tipo"){
             entry = false;
-        }else if(TablaSimbolos.tablaSimbolos.get(mainIndex + 1).ComponenteLexico != "parentesisabre"){
+        }else if(Main.tablap.get(mainIndex + 1).ComponenteLexico != "parentesisabre"){
             entry = false;
-        }else if(TablaSimbolos.tablaSimbolos.get(mainIndex + 2).ComponenteLexico != "parentesiscierra"){
+        }else if(Main.tablap.get(mainIndex + 2).ComponenteLexico != "parentesiscierra"){
             entry = false;
-        }else if(TablaSimbolos.tablaSimbolos.get(mainIndex + 3).ComponenteLexico != "llavecierra"){
+        }else if(Main.tablap.get(mainIndex + 3).ComponenteLexico != "llavecierra"){
             entry = false;
         }
         return entry;
@@ -53,10 +53,10 @@ public class AnalizadorSintactico {
     private int CountBrackets( ){
         int counter = 0;
 
-        for( int i = 0; i < TablaSimbolos.tablaSimbolos.size(); i++ ){
-            if( TablaSimbolos.tablaSimbolos.get(i).ComponenteLexico == "llaveabre")
+        for( int i = 0; i < Main.tablap.size(); i++ ){
+            if( Main.tablap.get(i).ComponenteLexico == "llaveabre")
                 counter++;
-            else if( TablaSimbolos.tablaSimbolos.get( i ).ComponenteLexico == "llavecierra")
+            else if( Main.tablap.get( i ).ComponenteLexico == "llavecierra")
                 counter--;
         }
         return counter;
@@ -65,8 +65,8 @@ public class AnalizadorSintactico {
     private int EntryAt() {
         int entryIndex = -1;
 
-        for( int i = 0; i < TablaSimbolos.tablaSimbolos.size(); i++){
-            if( TablaSimbolos.tablaSimbolos.get(i).ER.equals("main")){
+        for( int i = 0; i < Main.tablap.size(); i++){
+            if(Main.tablap.get(i).ER.equals("main")){
                 entryIndex = i;
             }
         }
@@ -76,22 +76,25 @@ public class AnalizadorSintactico {
 
     //sentencias
     private void Sentencia(ArrayList<ElementoTablaSimbolos> tokens) {
-        if(tokens.get(0).ComponenteLexico == "tipo" || tokens.get(0).ComponenteLexico == "id"){
+        if(tokens.get(0).ComponenteLexico == "tipo")
+            this.Declaracion(tokens);
+        else if (tokens.get(0).ComponenteLexico == "id")
+            this.Asignacion(tokens);
 
-            if(!this.Declaracion(tokens)){
-                this.Asignacion(tokens);
-            }
+//            if(!this.Declaracion(tokens)){
+//                this.Asignacion(tokens);
+//            }
 
 //        }else if(tokens.get(0).ComponenteLexico == "if" ){
 //            this.Condicion(tokens);
-        }/*else{
-            this.loop(tokens);
-        }*/
+//        }else{
+//            this.loop(tokens);
+//        }
     }
 //
     private boolean Declaracion(ArrayList<ElementoTablaSimbolos> tokens) {
         int cont = 0;
-            //declaracion de primer tipo:: <mod><tipo><id>;
+        //declaracion de primer tipo:: <mod><tipo><id>;
         //id::<id> | <id>,<id>
 
         while(tokens.get(cont).ComponenteLexico == "modif"){
@@ -103,13 +106,12 @@ public class AnalizadorSintactico {
 
             if( tokens.get(cont).ComponenteLexico == "id"){
                 cont++;
-
-                //Caso para multiples variables declaradas en una linea
+                //TODO: declaracion multiple
 //                while(tokens.get(cont).ComponenteLexico == "coma" && tokens.get(cont+1).ComponenteLexico == "id"){
 //                    cont+=2;
 //                }
 
-                if( tokens.get(cont).ComponenteLexico == "puntoycoma"){
+                if(tokens.get(cont).ComponenteLexico == "puntoycoma"){
                     Sentencia tmp = new Sentencia();
                     tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
                     tmp.tipo = "decl";
@@ -117,17 +119,21 @@ public class AnalizadorSintactico {
                     System.out.println("decl");
 
                     return true;
+                } else if (tokens.get(cont).ComponenteLexico == "opas") {
+                    // Si no fue una declaracion de primer tipo, se intentara segundo tipo
+                    // decl:: <type> <assign>
+                    Sentencia tmp = new Sentencia();
+                    tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
+                    tmp.tipo = "decl";
+
+                    Sentencias.add(tmp);
+                    if (this.Asignacion(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont - 1, tokens.size()))))
+                        return true;
+                } else {
+                    errores += "Hace falta ; en declaracion\n";
+                    return false;
                 }
             }
-            // Si no fue una declaracion de primer tipo, se intentara segundo tipo
-            // decl:: <type> <assign>
-
-            Sentencia tmp = new Sentencia();
-            tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
-            tmp.tipo = "decl";
-
-            Sentencias.add(tmp);
-            this.Asignacion(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont-1, tokens.size())));
         }
         return false;
     }
@@ -135,14 +141,16 @@ public class AnalizadorSintactico {
     private boolean Asignacion(ArrayList<ElementoTablaSimbolos> tokens) {
 
         //Valida el tamano minimo
-        if( tokens.size() < 4 ){
-//            Errors.add("Assignment incomplete");
+        if(tokens.size() < 4 ){
+            errores += "Asignacion incompleta\n";
             return false;
         }
 
         if(tokens.get(0).ComponenteLexico == "id"){
-            if( tokens.get(1).ER == "="){
-                if(tokens.get(2).ComponenteLexico == "int" || tokens.get(2).ComponenteLexico == "double"){
+            if(tokens.get(1).ComponenteLexico == "opas"){
+                //TODO: var
+//                if(tokens.get(2).ComponenteLexico == "int" || tokens.get(2).ComponenteLexico == "double" || tokens.get(2).ComponenteLexico == "id"){
+                if(this.var(tokens.get(2))){
                     if( tokens.get(3).ComponenteLexico == "puntoycoma"){
                         Sentencia tmp = new Sentencia();
                         tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
@@ -150,41 +158,46 @@ public class AnalizadorSintactico {
                         Sentencias.add(tmp);
                         System.out.println("assign");
                         return true;
-                    }else{
-//                        Errors.add("Missing semicolon");
                     }
                 }
-
+                //TODO: operacion en asignacion
                 if(oper(new ArrayList<ElementoTablaSimbolos>( tokens.subList( 2, tokens.size() - 1 ) ))){
                     if( tokens.get(tokens.size() - 1).ComponenteLexico == "puntoycoma" ){
                         System.out.println("assign");
                         return true;
                     }
                 }
-            }else{
-//                Errors.add("Expecting equal ER");
+
+                if(tokens.get(tokens.size()-1).ComponenteLexico != "puntoycoma"){
+                    errores += "Falta ; en asignacion\n";
+                    return false;
+                }
             }
         }
+        errores += "Error en asignacion\n";
         return false;
     }
 
     private boolean oper(ArrayList<ElementoTablaSimbolos> tokens){
 
         if(tokens.size() < 3){
-            if( this.var(tokens.get(0))  ){
-                return true;
-            }
-//            Errors.add("Oper missing tokens");
+//            if( this.var(tokens.get(0))  ){
+//                return true;
+//            }
+            errores += "Operacion incompleta\n";
             return false;
         }
+//        int cont = 0;
 
         if(this.var(tokens.get(0))){
+            //TODO: operaciones con multiples operadores
             if(this.op( tokens.get(1))){
                 if(this.var( tokens.get(2))) {
                     return true;
                 }
             }
         }
+        errores += "Error en operacion\n";
         return false;
     }
 
@@ -195,6 +208,7 @@ public class AnalizadorSintactico {
             return true;
         else{
 //            Errors.add("Not OP found");
+//            errores += "No se encontro operador\n";
             return false;
         }
 
@@ -238,12 +252,12 @@ public class AnalizadorSintactico {
 
         for (int i = startIndex + 1; i < endIndex; i++){
             //Los mete a pila hasta encontrar ;
-            tmp.add(TablaSimbolos.tablaSimbolos.get(i));
+            tmp.add(Main.tablap.get(i));
 
-            if(TablaSimbolos.tablaSimbolos.get(i).ComponenteLexico == "puntoycoma"){
+            if(Main.tablap.get(i).ComponenteLexico == "puntoycoma"){
                 Sentencia(tmp);
                 tmp.clear();
-            }else if(TablaSimbolos.tablaSimbolos.get(i).ComponenteLexico == "llavecierra"){
+            }else if(Main.tablap.get(i).ComponenteLexico == "llavecierra"){
                 Sentencia(tmp);
                 tmp.clear();
             }

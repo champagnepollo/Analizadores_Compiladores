@@ -23,7 +23,7 @@ public class ElementoTablaSimbolos {
             else{
                 return false;
             }
-            }
+        }
 
         return this.ER.equals(((ElementoTablaSimbolos) obj).ER);
     }

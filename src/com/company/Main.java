@@ -106,6 +106,7 @@ public class Main extends JFrame implements ActionListener, Serializable {
             inputTM.setRowCount(0);
             simbolTM.setRowCount(0);
             AnalizadorLexico analizador = new AnalizadorLexico("archivo.txt",texto);
+            AnalizadorSintactico sintactico = new AnalizadorSintactico();
             TablaSimbolos tabla = new TablaSimbolos();
             //System.out.println(analizador.content.length());
             //System.out.println(analizador.buffer.length);
@@ -113,7 +114,8 @@ public class Main extends JFrame implements ActionListener, Serializable {
             tablar=tabla;
             arrayr =new String[tablar.tablaSimbolos.size()][3];
             arrayp =new String[tablap.size()][3];
-            errores=analizador.errores;
+            sintactico.Analizar();
+            errores=analizador.errores + sintactico.errores;
             //inputTM.setRowCount(0);
             for(int i=0;i<tablar.tablaSimbolos.size();i++){
                 arrayr[i][0]=tablar.tablaSimbolos.get(i).ER;

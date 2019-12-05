@@ -186,7 +186,7 @@ public class AFD {
                 q1();
             } else {
                 if(tablaSimbolos.tablaSimbolos.contains(new ElementoTablaSimbolos(palabraActual,""))){
-                    palabras.add(new ElementoTablaSimbolos(palabraActual,palabraActual));
+                    palabras.add(new ElementoTablaSimbolos(palabraActual,"tipo"));
                 }
                 else{
                     palabras.add(new ElementoTablaSimbolos(palabraActual,"id"));
