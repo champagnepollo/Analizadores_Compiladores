@@ -97,7 +97,6 @@ public class TablaSimbolos {
         tablaSimbolos.add(new ElementoTablaSimbolos("]","corchetecierra"));
         tablaSimbolos.add(new ElementoTablaSimbolos("\"","comillas"));
         tablaSimbolos.add(new ElementoTablaSimbolos("\'","comilla"));
-
     }
 
     public void agregarElemento(ElementoTablaSimbolos elemento){

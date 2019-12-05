@@ -129,12 +129,13 @@ public class AnalizadorSintactico {
                     Sentencias.add(tmp);
                     if (this.Asignacion(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont - 1, tokens.size()))))
                         return true;
-                } else {
+                } else if (tokens.get(tokens.size()-1).ComponenteLexico != "puntoycoma") {
                     errores += "Hace falta ; en declaracion\n";
                     return false;
                 }
             }
         }
+        errores += "Declaracion incorrecta\n";
         return false;
     }
 
