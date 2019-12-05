@@ -185,8 +185,8 @@ public class AFD {
                 cont++;
                 q1();
             } else {
-                if(tablaSimbolos.tablaSimbolos.contains(new ElementoTablaSimbolos(palabraActual,""))){
-                    palabras.add(new ElementoTablaSimbolos(palabraActual,"tipo"));
+                if(tablaSimbolos.tablaSimbolos.contains(new ElementoTablaSimbolos(palabraActual, ""))){
+                    palabras.add(new ElementoTablaSimbolos(palabraActual,tablaSimbolos.getComponente(palabraActual).ComponenteLexico));
                 }
                 else{
                     palabras.add(new ElementoTablaSimbolos(palabraActual,"id"));

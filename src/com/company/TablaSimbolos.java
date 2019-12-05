@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.swing.text.Element;
 import java.util.ArrayList;
 
 public class TablaSimbolos {
@@ -97,6 +98,15 @@ public class TablaSimbolos {
         tablaSimbolos.add(new ElementoTablaSimbolos("]","corchetecierra"));
         tablaSimbolos.add(new ElementoTablaSimbolos("\"","comillas"));
         tablaSimbolos.add(new ElementoTablaSimbolos("\'","comilla"));
+    }
+
+    public ElementoTablaSimbolos getComponente(String ER){
+        for (ElementoTablaSimbolos elem: tablaSimbolos) {
+            if (elem.ER.equals(ER)){
+                return elem;
+            }
+        }
+        return null;
     }
 
     public void agregarElemento(ElementoTablaSimbolos elemento){

@@ -82,23 +82,27 @@ public class AnalizadorSintactico {
 
         int cont = 0;
         if(tokens.get(cont).ER.equals("if") || tokens.get(cont).ER.equals("else")){
-            cont++;
-            if(tokens.get(cont++).ComponenteLexico == "parentesisabre"){
+            if(tokens.get(++cont).ComponenteLexico == "parentesisabre"){
                 ArrayList<ElementoTablaSimbolos> tmp = new ArrayList<ElementoTablaSimbolos>();
+                cont++;
                 if(!oper_l(new ArrayList<ElementoTablaSimbolos>(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont, cont+3))))) {
-                    errores += "Error en operacion relacional\n";
-                }
-//                while(!(tokens.get(++cont).ComponenteLexico == "parentesiscierra")){
-////                TODO: oper_l
-//                    tmp.add(tokens.get(cont++));
-//                }
-                cont+=4;
+                    if(tokens.get(cont).ER.equals("true") || tokens.get(cont).ER.equals("false"))
+                        cont+=2;
+                    else
+                        errores += "Error en operacion relacional\n";
+                }else
+                    cont+=4;
+
                 Sentencia temp = new Sentencia();
                 temp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
                 temp.tipo = "ifcond";
                 Sentencias.add(temp);
                 System.out.println("ifcond");
                 bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont+1, tokens.size()-1)));
+//                while(!(tokens.get(++cont).ComponenteLexico == "parentesiscierra")){
+////                TODO: oper_l
+//                    tmp.add(tokens.get(cont++));
+//                }
             }
 
         }else if (tokens.get(tokens.size()-1).ComponenteLexico != "puntoycoma") {
@@ -163,8 +167,6 @@ public class AnalizadorSintactico {
                     return true;
                 }
             }
-        }else{
-            errores += "Error en operacion logica";
         }
         return false;
 
