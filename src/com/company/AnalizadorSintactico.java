@@ -74,13 +74,29 @@ public class AnalizadorSintactico {
 
     //sentencias
     private void Sentencia(ArrayList<ElementoTablaSimbolos> tokens) {
-        if(tokens.get(0).ComponenteLexico == "tipo")
+        if(tokens.get(0).ComponenteLexico == "tipo" && !(tokens.get(0).ER.equals("if")))
             this.Declaracion(tokens);
         else if (tokens.get(0).ComponenteLexico == "id")
             this.Asignacion(tokens);
 
-        if(tokens.get(0).ComponenteLexico == "if"){
-            System.out.println("algo es algo jeje saludos");
+        int cont = 0;
+        if(tokens.get(cont).ER.equals("if") || tokens.get(cont).ER.equals("else")){
+            cont++;
+            if(tokens.get(cont).ComponenteLexico == "parentesisabre"){
+                ArrayList<ElementoTablaSimbolos> tmp = new ArrayList<ElementoTablaSimbolos>();
+                while(!(tokens.get(++cont).ComponenteLexico == "parentesiscierra")){
+//                TODO: oper_l
+                    tmp.add(tokens.get(cont++));
+                }
+                cont++;
+                bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont+1, tokens.size())));
+                Sentencia temp = new Sentencia();
+                temp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
+                temp.tipo = "ifcond";
+                Sentencias.add(temp);
+                System.out.println("ifcond");
+            }
+
         }else if (tokens.get(tokens.size()-1).ComponenteLexico != "puntoycoma") {
             errores += "Hace falta ; en la sentencia\n";
         }
@@ -270,8 +286,10 @@ public class AnalizadorSintactico {
                 if (bloque.get(i).ComponenteLexico == "llavecierra") {
 //                    bloquecont--;
                     if (--bloquecont == 0) {
-                        bloque(new ArrayList<ElementoTablaSimbolos>(tmp.subList(1, tmp.size()-1)));
+//                        bloque(new ArrayList<ElementoTablaSimbolos>(tmp.subList(1, tmp.size()-1)));
+                        Sentencia(new ArrayList<ElementoTablaSimbolos>(tmp.subList(0, tmp.size()-1)));
                         tmp.clear();
+                        return true;
                     }
                 }else if(bloque.get(i).ComponenteLexico == "llaveabre")
                     bloquecont++;
@@ -280,10 +298,14 @@ public class AnalizadorSintactico {
             }else if(bloque.get(i).ComponenteLexico == "puntoycoma"){
                 Sentencia(tmp);
                 tmp.clear();
-            }else if(i == bloque.size()){
+            }else if(i == bloque.size()-1){
                 Sentencia(tmp);
                 tmp.clear();
             }
+        }
+        if(bloquecont > 0) {
+            errores += "Error de bloque";
+            return false;
         }
         return false;
     }
