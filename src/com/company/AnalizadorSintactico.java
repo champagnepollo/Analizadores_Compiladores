@@ -104,13 +104,12 @@ public class AnalizadorSintactico {
             if( tokens.get(cont).ComponenteLexico == "id"){
                 cont++;
 
-                //Caso para multiples variables declaradas en una sola linea
+                //Caso para multiples variables declaradas en una linea
 //                while(tokens.get(cont).ComponenteLexico == "coma" && tokens.get(cont+1).ComponenteLexico == "id"){
 //                    cont+=2;
 //                }
 
                 if( tokens.get(cont).ComponenteLexico == "puntoycoma"){
-
                     Sentencia tmp = new Sentencia();
                     tmp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
                     tmp.tipo = "decl";
@@ -171,7 +170,7 @@ public class AnalizadorSintactico {
 
     private boolean oper(ArrayList<ElementoTablaSimbolos> tokens){
 
-        if( tokens.size() < 3 ){
+        if(tokens.size() < 3){
             if( this.var(tokens.get(0))  ){
                 return true;
             }
@@ -190,42 +189,25 @@ public class AnalizadorSintactico {
     }
 
     private boolean op(ElementoTablaSimbolos t){
-        /*if(op_log(t)){
+        if(t.ComponenteLexico.equals("opb"))
             return true;
-
-        }else*/ if(oper_a(t)){
+        else if(t.ComponenteLexico.equals("opa"))
             return true;
-        }else{
+        else{
 //            Errors.add("Not OP found");
             return false;
         }
 
     }
 
-//    private boolean op_log( ElementoTablaSimbolos t ){
-////        if( t.ER.equals("&&") || t.ER.equals("||") ){
-//        if(t.ComponenteLexico.equals("opb")){
-//            return true;
-//        }
-//        return false;
-//    }
-
-    private boolean oper_a( ElementoTablaSimbolos t) {
-//        if(t.ER.equals("+") || t.ER.equals("-") || t.ER.equals("*") || t.ER.equals("/") || t.ER.equals("%")){
-        if(t.ComponenteLexico.equals("opa")){
-            return true;
-        }
-        return false;
-    }
-//
-//    private void cond(ArrayList<ElementoTablaSimbolos> tokens) {
+//    private void condif(ArrayList<ElementoTablaSimbolos> tokens) {
 //        if( tokens.get(0).ComponenteLexico == "if"){
 //            if( tokens.get(1).ComponenteLexico == "parentesisabre"){
 //                ArrayList<ElementoTablaSimbolos> tmp = new ArrayList<>();
 //                tmp.add( tokens.get(2) );
 //                tmp.add( tokens.get(3) );
 //                tmp.add( tokens.get(4) );
-//                if(oper_l(tmp) ){
+//                if(oper_l(tmp)){
 //                    tmp.clear();
 //                    if( tokens.get(5).ComponenteLexico == "parentesiscierra"){
 //                        if(tokens.get(6).ComponenteLexico == "llaveabre"){
@@ -259,7 +241,6 @@ public class AnalizadorSintactico {
             tmp.add(TablaSimbolos.tablaSimbolos.get(i));
 
             if(TablaSimbolos.tablaSimbolos.get(i).ComponenteLexico == "puntoycoma"){
-
                 Sentencia(tmp);
                 tmp.clear();
             }else if(TablaSimbolos.tablaSimbolos.get(i).ComponenteLexico == "llavecierra"){

@@ -24,7 +24,7 @@ public class Main extends JFrame implements ActionListener, Serializable {
     public static ArrayList<ElementoTablaSimbolos> tablap=new ArrayList<>();
     public static String[][] arrayp;
     public static String errores;
-    public static StringBuilder erroress= new StringBuilder();
+//    public static StringBuilder erroress= new StringBuilder();
     public static void main(String[] args) {
         new Main();
     }
@@ -113,7 +113,7 @@ public class Main extends JFrame implements ActionListener, Serializable {
             tablar=tabla;
             arrayr =new String[tablar.tablaSimbolos.size()][3];
             arrayp =new String[tablap.size()][3];
-            errores=analizador.erroress;
+            errores=analizador.errores;
             //inputTM.setRowCount(0);
             for(int i=0;i<tablar.tablaSimbolos.size();i++){
                 arrayr[i][0]=tablar.tablaSimbolos.get(i).ER;

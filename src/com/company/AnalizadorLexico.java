@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class AnalizadorLexico {
     public String content;
     public char[] buffer;
-    public StringBuilder errores= new StringBuilder();
-    public String erroress = "Errores lexicos encontrados\n";
+//    public StringBuilder errores= new StringBuilder();
+    public String errores = "Errores lexicos encontrados\n";
 
     public AnalizadorLexico(String archivo,String texto) {
         content = "";
@@ -33,7 +33,7 @@ public class AnalizadorLexico {
                         tablaSimbolos.agregarElemento(elemento);
                     }
                 }
-        erroress+=automata.errores;
+        errores+=automata.errores;
         return tablaSimbolosEncontrados;
     }
 
