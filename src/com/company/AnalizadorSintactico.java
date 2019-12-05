@@ -83,36 +83,29 @@ public class AnalizadorSintactico {
         int cont = 0;
         if(tokens.get(cont).ER.equals("if") || tokens.get(cont).ER.equals("else")){
             cont++;
-            if(tokens.get(cont).ComponenteLexico == "parentesisabre"){
+            if(tokens.get(cont++).ComponenteLexico == "parentesisabre"){
                 ArrayList<ElementoTablaSimbolos> tmp = new ArrayList<ElementoTablaSimbolos>();
-                while(!(tokens.get(++cont).ComponenteLexico == "parentesiscierra")){
-//                TODO: oper_l
-                    tmp.add(tokens.get(cont++));
+                if(!oper_l(new ArrayList<ElementoTablaSimbolos>(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont, cont+3))))) {
+                    errores += "Error en operacion relacional\n";
                 }
-                cont++;
-                bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont+1, tokens.size()-1)));
+//                while(!(tokens.get(++cont).ComponenteLexico == "parentesiscierra")){
+////                TODO: oper_l
+//                    tmp.add(tokens.get(cont++));
+//                }
+                cont+=4;
                 Sentencia temp = new Sentencia();
                 temp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
                 temp.tipo = "ifcond";
                 Sentencias.add(temp);
                 System.out.println("ifcond");
+                bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont+1, tokens.size()-1)));
             }
 
         }else if (tokens.get(tokens.size()-1).ComponenteLexico != "puntoycoma") {
             errores += "Hace falta ; en la sentencia\n";
         }
-
-//            if(!this.Declaracion(tokens)){
-//                this.Asignacion(tokens);
-//            }
-
-//        }else if(tokens.get(0).ComponenteLexico == "if" ){
-//            this.Condicion(tokens);
-//        }else{
-//            this.loop(tokens);
-//        }
     }
-//
+
     private boolean Declaracion(ArrayList<ElementoTablaSimbolos> tokens) {
         int cont = 0;
         //declaracion de primer tipo:: <mod><tipo><id>;
@@ -160,6 +153,21 @@ public class AnalizadorSintactico {
         }
         errores += "Declaracion incorrecta\n";
         return false;
+    }
+
+    private boolean oper_l(ArrayList<ElementoTablaSimbolos> tokens) {
+        if(var(tokens.get(0))){
+            if(tokens.get(1).ComponenteLexico == "opr"){
+                if( var( tokens.get(2) ) ){
+                    System.out.println("oprel");
+                    return true;
+                }
+            }
+        }else{
+            errores += "Error en operacion logica";
+        }
+        return false;
+
     }
 
     private boolean Asignacion(ArrayList<ElementoTablaSimbolos> tokens) {
