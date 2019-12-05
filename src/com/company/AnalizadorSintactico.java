@@ -11,22 +11,23 @@ public class AnalizadorSintactico {
 
         if( classIndex == -1 ){
             errores += "No existe clase";
-        }
+        }else{
+            if( !CheckEntry( classIndex ) ){
+                errores += "No se definio ninguna clase";
+                errores += "Excepcting: class <id>{}";
+            }
 
-        if( !CheckEntry( classIndex ) ){
-            errores += "No se definio ninguna clase";
-            errores += "Excepcting: class <id>{}";
-        }
+            if( CountBrackets() != 0 ){
+                errores += "Hacen falta llaves";
+            }
 
-        if( CountBrackets() != 0 ){
-            errores += "Hacen falta llaves";
-        }
-
-        int p = EntryBracketAt( classIndex );
-        //TODO: Analizar(int, int)
+            int p = EntryBracketAt( classIndex );
+            //TODO: Analizar(int, int)
 //        Analizar(p, Main.tablap.size()-1);
 //        Analizar(-1, Main.tablap.size());
-        bloque(new ArrayList<ElementoTablaSimbolos>(Main.tablap.subList(p+1, Main.tablap.size()-1)));
+
+            bloque(new ArrayList<ElementoTablaSimbolos>(Main.tablap.subList(p, Main.tablap.size())));
+        }
     }
 
     private int EntryBracketAt( int classIndex ){
@@ -89,7 +90,7 @@ public class AnalizadorSintactico {
                     tmp.add(tokens.get(cont++));
                 }
                 cont++;
-                bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont+1, tokens.size())));
+                bloque(new ArrayList<ElementoTablaSimbolos>(tokens.subList(cont+1, tokens.size()-1)));
                 Sentencia temp = new Sentencia();
                 temp.token = new ArrayList<ElementoTablaSimbolos>(tokens);
                 temp.tipo = "ifcond";
@@ -284,10 +285,10 @@ public class AnalizadorSintactico {
             tmp.add(bloque.get(i));
             if (bloquecont > 0) {
                 if (bloque.get(i).ComponenteLexico == "llavecierra") {
-//                    bloquecont--;
-                    if (--bloquecont == 0) {
+                    bloquecont--;
+                    if (bloquecont == 0) {
 //                        bloque(new ArrayList<ElementoTablaSimbolos>(tmp.subList(1, tmp.size()-1)));
-                        Sentencia(new ArrayList<ElementoTablaSimbolos>(tmp.subList(0, tmp.size()-1)));
+                        Sentencia(new ArrayList<ElementoTablaSimbolos>(tmp.subList(1, tmp.size()-1)));
                         tmp.clear();
                         return true;
                     }
@@ -304,7 +305,7 @@ public class AnalizadorSintactico {
             }
         }
         if(bloquecont > 0) {
-            errores += "Error de bloque";
+            errores += "Error de bloque\n";
             return false;
         }
         return false;
@@ -333,8 +334,10 @@ public class AnalizadorSintactico {
                 Sentencia(tmp);
                 tmp.clear();
             }else if(i == endIndex-1){
-                Sentencia(tmp);
-                tmp.clear();
+                if(tmp.size() > 1) {
+                    Sentencia(tmp);
+                    tmp.clear();
+                }
             }
         }
     }
